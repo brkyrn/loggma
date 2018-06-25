@@ -1,0 +1,66 @@
+{% load static %}
+<html lang="en">
+<head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css" integrity="sha384-BVYiiSIFeK1dGmJRAkycuHAHRg32OmUcww7on3RYdg4Va+PmSTsz/K68vbdEjh4u" crossorigin="anonymous">
+    <script src="https://unpkg.com/react@15/dist/react.min.js"></script>
+    <script src="https://unpkg.com/react-dom@15/dist/react-dom.min.js">
+    </script>
+    <script src="https://unpkg.com/babel-standalone@6.15.0/babel.min.js"></script>
+    <style>
+        table {
+            font-family: arial, sans-serif;
+            border-collapse: collapse;
+            width: 100%;
+            margin-bottom: 25px;
+        }
+
+        td, th {
+            border: 1px solid #dddddd;
+            text-align: left;
+            padding: 8px;
+        }
+
+        tr:nth-child(even) {
+            background-color: #dddddd;
+        }
+    </style>
+
+</head>
+<body>
+<div class="container" style="margin-top: 25px;">
+<div id="all_tasks"></div>
+<select class="form-control" id="task_filtering" onchange="task_filtering(this.value)" style="margin-bottom: 25px">
+    <option selected value="All">All</option>
+    <option value="Completed">Completed</option>
+    <option value="Waiting">Waiting</option>
+</select>
+<div id="form"></div>
+</div>
+<script type="text/babel" src="{% static 'index.js' %}"></script>
+<script>
+    function task_filtering(value) {
+        table = document.getElementById("myTable");
+        tr = table.getElementsByTagName("tr");
+        for (i = 0; i < tr.length; i++) {
+            td = tr[i].getElementsByTagName("td")[2];
+            if (td) {
+                console.log(td.innerHTML.indexOf(value))
+                if (!(value == 'All')) {
+                    if (td.innerHTML.indexOf(value) > -1) {
+                        tr[i].style.display = "";
+                    } else {
+                        tr[i].style.display = "none";
+                    }
+                } else {
+                    tr[i].style.display = "";
+                }
+
+            }
+        }
+    }
+</script>
+</body>
+</html>
